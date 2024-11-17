@@ -24,6 +24,9 @@ class HomeController extends Controller
 
     public function create()
     {
+
+        $this->createCL();
+
         $client = Clients::where([
             ['first_name', request()->get('first_name')],
             ['second_name', request()->get('second_name')],
@@ -57,5 +60,34 @@ class HomeController extends Controller
         }
 
         return redirect()->route('home');
+    }
+
+    public function createCL()
+    {
+        if(Haircuts::all()->count() > 0) return;
+
+        \App\Haircuts::create([
+            'cost' => 100,
+            'name' => 'Haircut 1 male',
+            'sex'  => 'male',
+        ]);
+
+        \App\Haircuts::create([
+            'cost' => 200,
+            'name' => 'Haircut 2 female',
+            'sex'  => 'female',
+        ]);
+
+        \App\Haircuts::create([
+            'cost' => 100,
+            'name' => 'Haircut 3 male',
+            'sex'  => 'male',
+        ]);
+
+        \App\Haircuts::create([
+            'cost' => 250,
+            'name' => 'Haircut 4 female',
+            'sex'  => 'female',
+        ]);
     }
 }
