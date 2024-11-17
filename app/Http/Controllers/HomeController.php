@@ -16,6 +16,8 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $this->createCL();
+
         return view('welcome', [
             'haircuts' => Haircuts::all()->toArray() ?? [],
             'works'    => Works::with('client')->with('haircut')->get()->toArray() ?? [],
@@ -25,7 +27,7 @@ class HomeController extends Controller
     public function create()
     {
 
-        $this->createCL();
+        $hair = Haircuts::firstWhere('id', request()->get('haircut_id'));
 
         $client = Clients::where([
             ['first_name', request()->get('first_name')],
@@ -34,10 +36,13 @@ class HomeController extends Controller
         ])->first();
 
         if (!$client) {
+
+
             $client = Clients::create([
                 'first_name' => request()->get('first_name'),
                 'second_name' => request()->get('second_name'),
                 'third_name' => request()->get('third_name'),
+                'sex'       => $hair->sex,
             ]);
 
             $client->save();
