@@ -8,7 +8,7 @@ php artisan config:cache
 echo "Caching routes..."
 php artisan route:cache
 
-echo "Clear database..."
+echo "Clear database.1.."
 php artisan db:wipe
 
 echo "Running migrations..."
