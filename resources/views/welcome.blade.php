@@ -5,6 +5,7 @@
 </head>
 <body>
 <div>
+    <h1></h1>
     <form method="POST" action="/works">
         @csrf <!-- {{ csrf_field() }} -->
         <h1>Haircuts list:</h1>
