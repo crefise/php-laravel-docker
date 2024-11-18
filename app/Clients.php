@@ -21,4 +21,9 @@ class Clients extends Model
         'sex',
         'has_discount',
     ];
+
+    public function works()
+    {
+        return $this->hasMany(Works::class);
+    }
 }

@@ -18,6 +18,7 @@ class Works extends Model
     protected $fillable = [
         'haircut_id',
         'client_id',
+        'cost',
     ];
 
     public function client()

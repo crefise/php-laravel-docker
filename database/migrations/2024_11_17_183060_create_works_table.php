@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('works', function (Blueprint $table) {
             $table->id();
+            $table->float('cost');
             $table->foreignId('haircut_id')->references('id')->on('haircuts');
             $table->foreignId('client_id')->references('id')->on('clients');
             $table->timestamps();

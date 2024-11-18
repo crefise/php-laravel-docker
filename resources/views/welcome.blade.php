@@ -5,24 +5,24 @@
 </head>
 <body>
 <div>
-    <h1>Peace of hair</h1>
-</div>
-<div>
     <form method="POST" action="/works">
         @csrf <!-- {{ csrf_field() }} -->
+        <h1>Haircuts list:</h1>
         @foreach($haircuts as $haircut)
             <div style="border: 1px black solid; margin-top: 10px">
                 <div>
-                    Haircut number: <span>{{$haircut['id']}}</span>
+                    Haircut number: <b>{{$haircut['id']}}</b>
                 </div>
                 <div>
-                    Haircut name: <span>{{$haircut['name']}}</span>
+                    Haircut name: <b>{{$haircut['name']}}</b>
                 </div>
                 <div>
-                    Haircut sex: <span>{{$haircut['sex']}}</span>
+                    Haircut sex: <b>{{$haircut['sex']}}</b>
                 </div>
             </div>
         @endforeach
+
+        <h1>Create work:</h1>
         <div style="margin-top: 20px">
             <div><span>First name</span><input name="first_name" placeholder="Enter first name"></div>
             <div><span>Second name</span><input name="second_name" placeholder="Enter second name"></div>
@@ -33,19 +33,63 @@
     </form>
 </div>
 <div>
+    <h1>Works entries:</h1>
     @foreach ($works as $work)
         <div style="border: 1px black solid; margin-top: 10px">
             <div>
-                Haircut name: <span>{{$work['haircut']['name']}}</span>
+                Work code: <b>{{$work['id']}}</b>
             </div>
             <div>
-                Haircut cost: <span>{{$work['haircut']['cost']}}</span>
+                Haircut name: <b>{{$work['haircut']['name']}}</b>
             </div>
             <div>
-                Haircut client full name: <span>{{$work['client']['first_name'] . $work['client']['second_name'] . $work['client']['third_name']}}</span>
+                Haircut base cost: <b>{{$work['haircut']['cost']}}</b>
             </div>
             <div>
-                Client has discount: <span>{{$work['client']['has_discount'] }}</span>
+                Haircut cost: <b>{{$work['cost']}}</b>
+            </div>
+            <div>
+                Haircut client full name: <b>{{$work['client']['first_name'] . ' ' . $work['client']['second_name'] . ' ' . $work['client']['third_name']}}</b>
+            </div>
+        </div>
+    @endforeach
+</div>
+
+<div>
+    <h1>Clients entries:</h1>
+    @foreach ($clients as $client)
+        <div style="border: 1px black solid; margin-top: 10px">
+            <div>
+                Client full name: <b>{{ $client['first_name'] . ' ' . $client['second_name'] . ' ' . $client['third_name']}}</b>
+            </div>
+            <div>
+                Client sex: <b>{{ $client['sex'] }}</b>
+            </div>
+            <div>
+                Number of haircuts: <b>{{ $client['haircut_count'] }}</b>
+            </div>
+            <div>
+                Has discount: <b>{{ $client['has_discount'] ? 'yes' : 'no' }}</b>
+            </div>
+        </div>
+    @endforeach
+</div>
+
+<div>
+    <h1>MALE REGULAR entries:</h1>
+    @foreach ($maleRegularClients as $maleRegularClient)
+        <div style="border: 1px black solid; margin-top: 10px">
+            <div>
+                Client full name: <b>{{ $maleRegularClient['first_name'] . ' ' . $maleRegularClient['second_name'] . ' ' . $maleRegularClient['third_name']}}</b>
+            </div>
+            <div>
+                Client sex: <b>{{ $maleRegularClient['sex'] }}</b>
+            </div>
+            <div>
+                Number of haircuts: <b>{{ $maleRegularClient['haircut_count'] }}</b>
+            </div>
+            <div>
+                Has discount: <b>{{ $maleRegularClient['has_discount'] ? 'yes' : 'no' }}</b>
             </div>
         </div>
     @endforeach

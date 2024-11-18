@@ -21,6 +21,11 @@ class HomeController extends Controller
         return view('welcome', [
             'haircuts' => Haircuts::all()->toArray() ?? [],
             'works'    => Works::with('client')->with('haircut')->get()->toArray() ?? [],
+            'clients'  => Clients::all()->map(function ($client) {
+                $client['haircut_count'] = Works::where('client_id', $client->id)->count();
+                return $client;
+            })->toArray(),
+            'maleRegularClients' => Clients::where('sex', 'male')->where('has_discount', true)->get()
         ]);
     }
 
@@ -33,6 +38,7 @@ class HomeController extends Controller
             ['first_name', request()->get('first_name')],
             ['second_name', request()->get('second_name')],
             ['third_name', request()->get('third_name')],
+            ['sex', $hair->sex]
         ])->first();
 
         if (!$client) {
@@ -50,6 +56,7 @@ class HomeController extends Controller
 
         $work = Works::create([
             'haircut_id' => request()->get('haircut_id'),
+            'cost' => $client->has_discount ? $hair->cost * 0.97 : $hair->cost,
             'client_id' => $client->id,
         ]);
 
@@ -58,7 +65,7 @@ class HomeController extends Controller
 
         $count = Works::where('client_id', $client->id)->get()->count();
 
-        if ($count > 4) {
+        if ($count > 3) {
             $client->has_discount = true;
 
             $client->save();
@@ -73,25 +80,25 @@ class HomeController extends Controller
 
         \App\Haircuts::create([
             'cost' => 100,
-            'name' => 'Haircut 1 male',
+            'name' => 'Male superman haircut',
             'sex'  => 'male',
         ]);
 
         \App\Haircuts::create([
-            'cost' => 200,
-            'name' => 'Haircut 2 female',
+            'cost' => 150,
+            'name' => 'Male superwoman haircut',
             'sex'  => 'female',
         ]);
 
         \App\Haircuts::create([
-            'cost' => 100,
-            'name' => 'Haircut 3 male',
+            'cost' => 10,
+            'name' => 'Easy cut for male',
             'sex'  => 'male',
         ]);
 
         \App\Haircuts::create([
-            'cost' => 250,
-            'name' => 'Haircut 4 female',
+            'cost' => 3,
+            'name' => 'Easy cut for female',
             'sex'  => 'female',
         ]);
     }
