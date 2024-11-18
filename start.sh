@@ -8,6 +8,9 @@ php artisan config:cache
 echo "Caching routes..."
 php artisan route:cache
 
+echo "Clear database..."
+php artisan db:wipe
+
 echo "Running migrations..."
 php artisan migrate --force
 
